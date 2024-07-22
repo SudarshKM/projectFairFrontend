@@ -3,10 +3,15 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { registerApi } from "../../services/allApi";
+import { Link, useNavigate } from "react-router-dom";
+import { loginApi, registerApi } from "../../services/allApi";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Auth({ register, login }) {
+  const navigate = useNavigate();
+
   const [userDetails, setUserDetails] = useState({
     username: "",
     email: "",
@@ -14,16 +19,50 @@ function Auth({ register, login }) {
   });
 
   // console.log(userDetails);
-const handleregister = async()=>{
-  const { username, email, password } = userDetails;
+  const handleregister = async () => {
+    const { username, email, password } = userDetails;
 
-  if (!username || !email || !password) {
-    alert("Please fill the form completely");
-  } else {
+    if (!username || !email || !password) {
+      toast.warning("Please fill the form completely");
+    } else {
       const result = await registerApi(userDetails);
+      if (result.status == 200) {
+        toast.success("Registration successfull");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    }
+  };
 
-  }
-}
+  const handlelogin = async () => {
+    const { email, password } = userDetails;
+
+    if (!email || !password) {
+      toast.warning("Please fill the form completely");
+    } else {
+      const result = await loginApi({ email, password });
+      console.log(result);
+
+      if (result.status == 200) {
+        toast.success("Login successfull");
+        sessionStorage.setItem(
+          "existingUser",
+          JSON.stringify(result.data.existingUser)
+        );
+        sessionStorage.setItem("token", result.data.token);
+
+        setUserDetails({
+          username: "",
+          email: "",
+          password: "",
+        });
+
+        setTimeout(()=>{navigate("/");},2000)
+      }
+    }
+  };
+
   return (
     <>
       <div className="d-flex align-items-center justify-content-center flex-column p-5">
@@ -91,7 +130,12 @@ const handleregister = async()=>{
               />
               {login && (
                 <div className="mt-3 mb-3 w-100">
-                  <button className="btn btn-warning w-100 mt-3">Log In</button>
+                  <button
+                    className="btn btn-warning w-100 mt-3"
+                    onClick={handlelogin}
+                  >
+                    Log In
+                  </button>
                   <p className="text-light">
                     {" "}
                     New User ? Click here to{" "}
@@ -124,6 +168,7 @@ const handleregister = async()=>{
           {/* </div> */}
         </div>
       </div>
+      <ToastContainer position="top-center" autoClose={2000} theme="colored" />
     </>
   );
 }

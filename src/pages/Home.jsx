@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import ProjectCard from "../components/ProjectCard";
 import { Link } from "react-router-dom";
 
 function Home() {
+
+const [isLogin , setIsLogIn] = useState(false);
+
+useEffect(()=>{
+  if(sessionStorage.getItem("token")){
+    setIsLogIn(true)
+  }else{
+    setIsLogIn(false)
+  }
+},[])
+
   return (
     <>
       <div className="container-fluid bg-success">
@@ -15,12 +26,12 @@ function Home() {
             <p className="text-light">
               One stop destination for all software development Projects
             </p>
-            <Link to={"/login"}>
+          {!isLogin ?  <Link to={"/login"}>
               <button className="btn btn-warning me-1">Get Started</button>
-            </Link>{" "}
+            </Link> :
             <Link to={"/dashboard"}>
               <button className="btn btn-warning ms-1">Manage Projects</button>
-            </Link>
+            </Link>}
           </Col>
           <Col md={6} className="d-flex justify-content-center">
             <img

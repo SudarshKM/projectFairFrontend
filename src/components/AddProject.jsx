@@ -7,8 +7,19 @@ function AddProject() {
 
   const [show, setShow] = useState(false);
 
+  const [projectDetails , setProjectDetails] = useState({
+    title:"",
+    language:"",
+    github:"",
+    website:"",
+    overview:"",
+    projImage:""
+  });
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+console.log(projectDetails);
+
   return (
 
   
@@ -33,11 +44,11 @@ function AddProject() {
             <Col sm={12} md={6}>
             <form action="">
 
-              <input placeholder='Title' className="form-control mb-3"></input>
-              <input placeholder='Language' className="form-control mb-3"></input>
-              <input placeholder='Github' className="form-control mb-3"></input>
-              <input placeholder='Website' className="form-control mb-3"></input>
-              <input placeholder='Overview' className="form-control mb-3"></input>
+              <input placeholder='Title' className="form-control mb-3" onChange={(e)=>setProjectDetails({...projectDetails,title:e.target.value})}></input>
+              <input placeholder='Language' className="form-control mb-3" onChange={(e)=>setProjectDetails({...projectDetails,language:e.target.value})}></input>
+              <input placeholder='Github' className="form-control mb-3" onChange={(e)=>setProjectDetails({...projectDetails,github:e.target.value})}></input>
+              <input placeholder='Website' className="form-control mb-3" onChange={(e)=>setProjectDetails({...projectDetails,website:e.target.value})}></input>
+              <input placeholder='Overview' className="form-control mb-3" onChange={(e)=>setProjectDetails({...projectDetails,overview:e.target.value})}></input>
               <textarea placeholder='' rows={4} className="form-control mb-3"></textarea>
             </form>
             </Col>
