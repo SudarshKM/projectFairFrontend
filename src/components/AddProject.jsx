@@ -61,6 +61,7 @@ function AddProject() {
       reqBody.append("projImage",projImage)
 
     if(token){
+      
       const reqHeader = {
         "Content-Type":"multipart/form-data",
         "Authorization": `Bearer ${token}`
