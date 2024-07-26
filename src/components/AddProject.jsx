@@ -200,9 +200,9 @@ function AddProject() {
             Add
           </Button>
         </Modal.Footer>
+      <ToastContainer position="top-center" autoClose={2000} theme="colored" />
       </Modal>
 
-      <ToastContainer position="top-center" autoClose={2000} theme="colored" />
 
     </>
   );
