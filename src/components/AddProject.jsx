@@ -67,6 +67,15 @@ function AddProject() {
         "Authorization": `Bearer ${token}`
        }
        const result= await addProjectApi(reqBody,reqHeader)
+
+
+       if(result.status==200){
+        toast.success("project added");
+        handleClose();
+       } else if(result.status==406){
+        toast.warning("alreday  added");
+
+       }
   
        console.log(result);
     } else{
@@ -200,9 +209,9 @@ function AddProject() {
             Add
           </Button>
         </Modal.Footer>
-      <ToastContainer position="top-center" autoClose={2000} theme="colored" />
       </Modal>
 
+      <ToastContainer position="top-center" autoClose={2000} theme="colored" />
 
     </>
   );

@@ -2,12 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import ProjectCard from "../components/ProjectCard";
 import { Link } from "react-router-dom";
+import { homeProjectApi } from "../../services/allApi";
 
 function Home() {
 
 const [isLogin , setIsLogIn] = useState(false);
+const [homeProject , setHomeProject] = useState([]);
+
+const getHomeProjects=async()=>{
+  const result = await homeProjectApi();
+  // console.log(result.data);
+  setHomeProject(result.data)
+}
+
+// console.log(homeProject);
 
 useEffect(()=>{
+  getHomeProjects()
   if(sessionStorage.getItem("token")){
     setIsLogIn(true)
   }else{
@@ -46,9 +57,14 @@ useEffect(()=>{
       <div className="container-fluid">
         <h1 className="text-center mt-5">Explore our Projects</h1>
         <div className="row mt-5">
+
+        {homeProject?.length>0 ? homeProject?.map((item)=>(
           <div className="col-md-4 p-4">
-            <ProjectCard />
+            <ProjectCard projects={item}/>
           </div>
+        )):null}
+
+          
         </div>
         <Link to={"/project"} className="text-center text-danger">
           <h5>See more projects</h5>

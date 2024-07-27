@@ -20,3 +20,21 @@ export const loginApi = async (reqBody) => {
 export const addProjectApi = async (rebBody, reqHeader) => {
   return await commonApi("POST", `${server}/addproject`, rebBody, reqHeader);
 };
+
+//homeProjects
+
+export const homeProjectApi = async () => {
+  return await commonApi("GET", `${server}/homeprojects`, "", "");
+};
+
+
+//allProjects
+//query parameter = baseUrl?key=value
+export const allProjectsApi = async (searchKey,reqHeader) => {
+  return await commonApi("GET", `${server}/allprojects?search=${searchKey}`, "", reqHeader);
+};
+
+//userProject
+export const userProjectApi = async (reqHeader) =>{
+  return await commonApi("GET" , `${server}/userprojects`,"",reqHeader)
+}

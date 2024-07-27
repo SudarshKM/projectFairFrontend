@@ -8,50 +8,50 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
+import { server } from "../../services/serverUrl";
 
-function ProjectCard() {
+function ProjectCard({projects}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  console.log(projects);
   return (
     <>
       <Card className="shadow" style={{ width: "100%" }} onClick={handleShow}>
-        <Card.Img variant="top" src={mediaPlayer} />
+        <Card.Img variant="top" src={`${server}/uploads/${projects.projImage} `}/>
         <Card.Body>
-          <Card.Title className=" text-center">MediaPlayer</Card.Title>
+          <Card.Title className=" text-center">{projects?.title}</Card.Title>
         </Card.Body>
       </Card>
 
       <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>MediaPlayer</Modal.Title>
+          <Modal.Title>{projects?.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Row>
             <Col sm={12} md={6}>
-              <img src={mediaPlayer} className="w-100" alt="" />
+              <img src={`${server}/uploads/${projects.projImage} `} className="w-100" alt="" />
             </Col>
 
             <Col sm={12} md={6}>
-              <h4>Discription</h4>
+              <h4>Description</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-                quas voluptates hic adipisci neque dicta sint omnis dolor
-                corporis consequatur minima consectetur, aspernatur odit itaque
-                molestiae et, nulla reiciendis tempora?
+                {projects?.overview}
               </p>
 
               <h4>Technologies</h4>
-              <p>React</p>
+              <p>{projects?.language}</p>
             </Col>
           </Row>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-start">
-          <Link to={"/"}>
+          <Link to={projects?.github} target="_blank">
             <FontAwesomeIcon className="ms-1 text-secondary"  size="2xl" icon={faGithub} />
           </Link>
-          <Link to={"/"}>
+          <Link to={projects?.website} target="_blank">
             <FontAwesomeIcon  className="ms-1 text-secondary" size="2xl" icon={faLink} />
           </Link>
         </Modal.Footer>
