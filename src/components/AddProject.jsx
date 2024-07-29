@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
@@ -8,9 +8,12 @@ import { addProjectApi } from "../../services/allApi";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { addResponseContext } from "../contex/DataShare";
 
 function AddProject() {
   const [show, setShow] = useState(false);
+
+  const {setAddResponse} = useContext(addResponseContext)
 
   const [projectDetails, setProjectDetails] = useState({
     title: "",
@@ -72,6 +75,7 @@ function AddProject() {
        if(result.status==200){
         toast.success("project added");
         handleClose();
+        setAddResponse(result.data)
        } else if(result.status==406){
         toast.warning("alreday  added");
 

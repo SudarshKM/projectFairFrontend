@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import MyProject from '../components/Myproject'
 import { Col, Row } from "react-bootstrap";
 import Profile from "../components/Profile";
 
 function Dashboard() {
+
+  const [user , setuser] = useState("");
+
+  useEffect(()=>{
+    if(sessionStorage.getItem("existingUser")){
+      setuser(JSON.parse(sessionStorage.getItem("existingUser")).username);
+    }
+  },[])
   return (
     <>
       <Header dash={true} />
@@ -14,7 +22,7 @@ function Dashboard() {
         <span
           className="text-warning"
         >
-          User
+          {user}
         </span>
       </h3>
 
