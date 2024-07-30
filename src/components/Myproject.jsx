@@ -15,6 +15,8 @@ function Myproject() {
 
   const { addResponse } = useContext(addResponseContext);
 
+
+
   const getUserProject = async () => {
     if (sessionStorage.getItem("token")) {
       const token = sessionStorage.getItem("token");
@@ -41,7 +43,7 @@ function Myproject() {
     getUserProject();
     setDeleteStatus(false);
 
-  }, [addResponse , deleteSattus]);
+  }, [addResponse , deleteSattus ]);
 
   return (
     <div className="shadow p-3 px-3 py-4 rounded">
@@ -56,7 +58,7 @@ function Myproject() {
             <h5>{item.title}</h5>
 
             <div className="d-flex align-items-center">
-              <EditProject />
+              <EditProject project={item}/>
 
            <Link to={item?.website} target="_blank">
                 <FontAwesomeIcon

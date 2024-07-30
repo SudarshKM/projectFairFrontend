@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { addProjectApi } from "../../services/allApi";
 
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addResponseContext } from "../contex/DataShare";
@@ -13,7 +12,9 @@ import { addResponseContext } from "../contex/DataShare";
 function AddProject() {
   const [show, setShow] = useState(false);
 
-  const {setAddResponse} = useContext(addResponseContext)
+  const [key, setKey] = useState(0);
+
+  const { setAddResponse } = useContext(addResponseContext);
 
   const [projectDetails, setProjectDetails] = useState({
     title: "",
@@ -26,7 +27,7 @@ function AddProject() {
 
   const [preview, setPreview] = useState("");
 
-  const [token , setToken] = useState("");
+  const [token, setToken] = useState("");
 
   const handleClose = () => {
     setShow(false);
@@ -43,48 +44,51 @@ function AddProject() {
       projImage: "",
     });
     setPreview("");
+    if (key == 0) {
+      setKey(1);
+    } else {
+      setKey(0);
+    }
   };
 
-  const handleAdd =async (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
-    const { title, language, github, website, overview, projImage } = projectDetails;
-    if(!title || !language || !github || !website || !overview || !projImage ){
-      toast.warning("please fill the form completely")
-    } else{
+    const { title, language, github, website, overview, projImage } =
+      projectDetails;
+    if (!title || !language || !github || !website || !overview || !projImage) {
+      toast.warning("please fill the form completely");
+    } else {
       //api
       //Inorder to send uploaded content use FormData class
 
       const reqBody = new FormData();
 
-      reqBody.append("title",title)
-      reqBody.append("language",language)
-      reqBody.append("github",github)
-      reqBody.append("website",website)
-      reqBody.append("overview",overview)
-      reqBody.append("projImage",projImage)
+      reqBody.append("title", title);
+      reqBody.append("language", language);
+      reqBody.append("github", github);
+      reqBody.append("website", website);
+      reqBody.append("overview", overview);
+      reqBody.append("projImage", projImage);
 
-    if(token){
-      
-      const reqHeader = {
-        "Content-Type":"multipart/form-data",
-        "Authorization": `Bearer ${token}`
-       }
-       const result= await addProjectApi(reqBody,reqHeader)
+      if (token) {
+        const reqHeader = {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        };
+        const result = await addProjectApi(reqBody, reqHeader);
 
+        if (result.status == 200) {
+          toast.success("project added");
+          handleClose();
+          setAddResponse(result.data);
+        } else if (result.status == 406) {
+          toast.warning("alreday  added");
+        }
 
-       if(result.status==200){
-        toast.success("project added");
-        handleClose();
-        setAddResponse(result.data)
-       } else if(result.status==406){
-        toast.warning("alreday  added");
-
-       }
-  
-       console.log(result);
-    } else{
-      toast.warning("please login")
-    }
+        console.log(result);
+      } else {
+        toast.warning("please login");
+      }
     }
   };
   // console.log(projectDetails);
@@ -96,15 +100,16 @@ function AddProject() {
 
   useEffect(() => {
     if (projectDetails.projImage) {
+      //createObjectURL() : to convert files into urls
       setPreview(URL.createObjectURL(projectDetails.projImage));
     }
   }, [projectDetails.projImage]);
 
   // console.log(preview);
 
-  useEffect(()=>{
-    setToken(sessionStorage.getItem("token"))
-  },[])
+  useEffect(() => {
+    setToken(sessionStorage.getItem("token"));
+  }, []);
 
   // console.log(token);
 
@@ -129,6 +134,7 @@ function AddProject() {
                   type="file"
                   name=""
                   style={{ display: "none" }}
+                  key={key}
                   onChange={(e) => handleFile(e)}
                 />
                 <img
@@ -216,7 +222,6 @@ function AddProject() {
       </Modal>
 
       <ToastContainer position="top-center" autoClose={2000} theme="colored" />
-
     </>
   );
 }
