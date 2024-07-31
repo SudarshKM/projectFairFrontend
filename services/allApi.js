@@ -50,3 +50,9 @@ export const deleteProjectApi = async(id)=>{
 export const editProjectApi = async(projectId , reqBody , reqHeader) =>{
   return await commonApi("PUT" , `${server}/edit-project/${projectId}`,reqBody , reqHeader)
 }
+
+//edit profile
+
+export const editProfileApi = async( reqBody , reqHeader) =>{
+  return await commonApi("PUT" , `${server}/edit-profile`,reqBody , reqHeader)
+}

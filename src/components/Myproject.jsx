@@ -5,17 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { deleteProjectApi, userProjectApi } from "../../services/allApi";
-import { addResponseContext } from "../contex/DataShare";
-import { Link } from 'react-router-dom'
+import { addResponseContext, editResponseContext } from "../contex/DataShare";
+import { Link } from "react-router-dom";
 
 function Myproject() {
   const [userProject, setUserProject] = useState([]);
 
-  const [deleteSattus , setDeleteStatus] = useState(false);
+  const [deleteSattus, setDeleteStatus] = useState(false);
 
   const { addResponse } = useContext(addResponseContext);
 
-
+  const { editResponse } = useContext(editResponseContext);
 
   const getUserProject = async () => {
     if (sessionStorage.getItem("token")) {
@@ -34,7 +34,7 @@ function Myproject() {
     const result = await deleteProjectApi(id);
 
     console.log(result);
-    if(result.status==200){
+    if (result.status == 200) {
       setDeleteStatus(true);
     }
   };
@@ -42,8 +42,7 @@ function Myproject() {
   useEffect(() => {
     getUserProject();
     setDeleteStatus(false);
-
-  }, [addResponse , deleteSattus ]);
+  }, [addResponse, deleteSattus, editResponse]);
 
   return (
     <div className="shadow p-3 px-3 py-4 rounded">
@@ -58,20 +57,20 @@ function Myproject() {
             <h5>{item.title}</h5>
 
             <div className="d-flex align-items-center">
-              <EditProject project={item}/>
+              <EditProject project={item} />
 
-           <Link to={item?.website} target="_blank">
+              <Link to={item?.website} target="_blank">
                 <FontAwesomeIcon
                   icon={faGlobe}
                   className="fs-5 text-warning ms-3"
                 />
-           </Link>
-            <Link to={item?.github} target="_blank">
+              </Link>
+              <Link to={item?.github} target="_blank">
                 <FontAwesomeIcon
                   icon={faGithub}
                   className="fs-5 text-success ms-3"
                 />
-            </Link>
+              </Link>
               <FontAwesomeIcon
                 icon={faTrash}
                 className="fs-5 text-danger ms-3 me-5"

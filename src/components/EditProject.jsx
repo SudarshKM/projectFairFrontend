@@ -10,7 +10,7 @@ import { server } from "../../services/serverUrl";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { editProjectApi } from "../../services/allApi";
-import { addResponseContext } from "../contex/DataShare";
+import { addResponseContext, editResponseContext } from "../contex/DataShare";
 
 function EditProject({ project }) {
   const [show, setShow] = useState(false);
@@ -19,9 +19,8 @@ function EditProject({ project }) {
 
   const [key, setKey] = useState(0);
 
-
   const [projectDetails, setProjectDetails] = useState({
-    id : project?._id,
+    id: project?._id,
     title: project?.title,
     language: project?.language,
     github: project?.github,
@@ -32,8 +31,7 @@ function EditProject({ project }) {
 
   // console.log(projectDetails);
 
-
-
+  const { setEditResponse } = useContext(editResponseContext);
 
   const handleFileUpload = (e) => {
     e.preventDefault();
@@ -66,7 +64,7 @@ function EditProject({ project }) {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const { id , title, language, github, website, overview, projImage } =
+    const { id, title, language, github, website, overview, projImage } =
       projectDetails;
     if (!title || !language || !github || !website || !overview) {
       toast.warning("please fill the form completely");
@@ -84,43 +82,42 @@ function EditProject({ project }) {
 
       const token = sessionStorage.getItem("token");
 
-      if (preview) { // if there is new image upload
+      if (preview) {
+        // if there is new image upload
         const reqHeader = {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         };
 
+        const result = await editProjectApi(id, reqBody, reqHeader);
 
-        const result = await editProjectApi(id , reqBody ,reqHeader)
-
-        console.log(result)
-        if(result.status==200){
+        console.log(result);
+        if (result.status == 200) {
           toast.success("project updated successfully");
 
           handleClose();
-        } else{
-          toast.warning("something went wrong")
+
+          setEditResponse(result.data);
+        } else {
+          toast.warning("something went wrong");
         }
-
-
-      } else { // if there is no new image upload
+      } else {
+        // if there is no new image upload
         const reqHeader = {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         };
 
+        const result = await editProjectApi(id, reqBody, reqHeader);
 
-        const result = await editProjectApi(id , reqBody ,reqHeader)
-
-        console.log(result)
-        if(result.status==200){
-         toast.success("project updated successfully");
+        console.log(result);
+        if (result.status == 200) {
+          toast.success("project updated successfully");
           handleClose();
-
-        } else{
-          toast.warning("something went wrong")
+          setEditResponse(result.data);
+        } else {
+          toast.warning("something went wrong");
         }
-
       }
     }
   };
