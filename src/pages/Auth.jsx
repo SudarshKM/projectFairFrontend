@@ -1,13 +1,14 @@
 import { faStackOverflow } from "@fortawesome/free-brands-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { loginApi, registerApi } from "../../services/allApi";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { loggedInResponseContext } from "../contex/DataShare";
 
 function Auth({ register, login }) {
   const navigate = useNavigate();
@@ -17,6 +18,11 @@ function Auth({ register, login }) {
     email: "",
     password: "",
   });
+
+
+   const {isLoggedIn,setIsLoggedIn} = useContext(loggedInResponseContext);
+
+   console.log(isLoggedIn);
 
   // console.log(userDetails);
   const handleregister = async () => {
@@ -51,6 +57,9 @@ function Auth({ register, login }) {
           JSON.stringify(result.data.existingUser)
         );
         sessionStorage.setItem("token", result.data.token);
+
+        setIsLoggedIn(true);
+
 
         setUserDetails({
           username: "",

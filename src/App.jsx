@@ -6,6 +6,8 @@ import Auth from "./pages/Auth";
 import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
 
+import ProtectedRoutes from './privateRoute/ProtectedRoutes'
+
 function App() {
   return (
     <>
@@ -13,7 +15,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/project" element={<Project />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        
+        <Route element={<ProtectedRoutes/>}>
+
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+
         <Route path="/login" element={<Auth login/>} />
         <Route path="/register" element={<Auth register/>} />
 

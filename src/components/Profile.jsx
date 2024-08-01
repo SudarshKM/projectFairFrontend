@@ -20,7 +20,7 @@ function Profile() {
   const [preview, setPreview] = useState("");
 
   const [exstingImage, setExstingImage] = useState("");
-  console.log(userDetails);
+  // console.log(userDetails);
 
   const handleFile = (e) => {
     e.preventDefault();
@@ -104,9 +104,12 @@ function Profile() {
         github: user.github,
         linkedin: user.linkedin,
       });
-      setExstingImage(userDetails.profile);
+      setExstingImage(user.profile);
     }
   }, [editStatus]);
+
+  // console.log("preview:",preview);
+  // console.log("exstingImage:",exstingImage);
   return (
     <>
       <div
@@ -150,15 +153,15 @@ function Profile() {
                   height={150}
                   width={150}
                   style={{ borderRadius: "50%" }}
-                  alt="no image"
+                  alt="no exsting image"
                 />
               ) : (
                 <img
-                  src={preview ? preview : `${server}/uploads/exstingImage`}
+                  src={preview ? preview : `${server}/uploads/${exstingImage}`}
                   height={150}
                   width={150}
                   style={{ borderRadius: "50%" }}
-                  alt="no image"
+                  alt="exsting image"
                 />
               )}
             </label>

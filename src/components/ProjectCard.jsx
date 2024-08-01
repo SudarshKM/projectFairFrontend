@@ -16,7 +16,7 @@ function ProjectCard({projects}) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(projects);
+  // console.log(projects);
   return (
     <>
       <Card className="shadow" style={{ width: "100%" }} onClick={handleShow}>
