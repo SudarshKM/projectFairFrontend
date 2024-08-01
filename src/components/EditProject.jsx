@@ -91,7 +91,7 @@ function EditProject({ project }) {
 
         const result = await editProjectApi(id, reqBody, reqHeader);
 
-        console.log(result);
+        // console.log(result);
         if (result.status == 200) {
           toast.success("project updated successfully");
 
@@ -110,7 +110,7 @@ function EditProject({ project }) {
 
         const result = await editProjectApi(id, reqBody, reqHeader);
 
-        console.log(result);
+        // console.log(result);
         if (result.status == 200) {
           toast.success("project updated successfully");
           handleClose();
