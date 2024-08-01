@@ -69,6 +69,10 @@ function Auth({ register, login }) {
 
         setTimeout(()=>{navigate("/");},2000)
       }
+      else if(result.response.status == 406){
+        toast.error("invalid email or password");
+
+      }
     }
   };
 
