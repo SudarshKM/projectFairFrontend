@@ -56,7 +56,7 @@ function Profile() {
 
       const result = await editProfileApi(reqBody, reqHeader);
 
-      console.log(result);
+      // console.log(result);
       if (result.status == 200) {
         toast.success("profile updated successfully");
 
@@ -71,7 +71,7 @@ function Profile() {
 
       const result = await editProfileApi(reqBody, reqHeader);
 
-      console.log(result);
+      // console.log(result);
       if (result.status == 200) {
         toast.success("profile updated successfully");
 

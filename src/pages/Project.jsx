@@ -11,7 +11,7 @@ function Project() {
   const [project, setProject] = useState([]);
   const [searchKey , setSearchkey] = useState("");
 
-  console.log(searchKey);
+  // console.log(searchKey);
 
   const getAllProject = async () => {
     if (sessionStorage.getItem("token")) {

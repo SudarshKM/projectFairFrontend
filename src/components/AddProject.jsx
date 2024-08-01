@@ -85,7 +85,7 @@ function AddProject() {
           toast.warning("alreday  added");
         }
 
-        console.log(result);
+        // console.log(result);
       } else {
         toast.warning("please login");
       }

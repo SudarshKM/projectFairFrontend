@@ -33,7 +33,7 @@ function Myproject() {
   const handleDelete = async (id) => {
     const result = await deleteProjectApi(id);
 
-    console.log(result);
+    // console.log(result);
     if (result.status == 200) {
       setDeleteStatus(true);
     }

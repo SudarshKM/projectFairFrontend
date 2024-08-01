@@ -14,7 +14,7 @@ function Header({ dash }) {
 
   const navigate = useNavigate();
 
-  console.log(isLoggedIn);
+  // console.log(isLoggedIn);
 
   const logOut = () => {
 

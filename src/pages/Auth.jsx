@@ -22,7 +22,7 @@ function Auth({ register, login }) {
 
    const {isLoggedIn,setIsLoggedIn} = useContext(loggedInResponseContext);
 
-   console.log(isLoggedIn);
+  //  console.log(isLoggedIn);
 
   // console.log(userDetails);
   const handleregister = async () => {
@@ -48,7 +48,7 @@ function Auth({ register, login }) {
       toast.warning("Please fill the form completely");
     } else {
       const result = await loginApi({ email, password });
-      console.log(result);
+      // console.log(result);
 
       if (result.status == 200) {
         toast.success("Login successfull");
